@@ -28,17 +28,17 @@ export default class Init extends Command {
   async run(): Promise<void> {
     console.log("Welcome to the Cerebellum CLI!");
     await confirmAwsCliInstall();
+    await confirmAwsCdkInstall();
     await configureAWS();
     await cloneCDK();
     await npmInstallCDK();
     await npmInstallLambda();
-    await confirmAwsCdkInstall();
     await cdkSynth();
     await cdkBootstrap();
     // await cdkDeploy() // better to let them deploy so they can see progress and address any errors that arise
     console.log("Success! You are now ready to deploy your infrastructure!");
     console.log(
-      "When ready, enter `cd cdk && cdk deploy` and follow the prompts."
+      "When ready, run `cd cdk && cdk deploy` and follow the prompts."
     );
     console.log("Deployment can take 10-20 minutes, depending on complexity.");
   }
