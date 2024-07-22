@@ -21,10 +21,11 @@ const cloneCDK = async (init: Boolean, directory?: String) => {
       );
     }
 
-    spinner.succeed("CDK successfully cloned!");
+    // spinner.succeed("CDK successfully cloned!");
+    spinner.stop();
+    console.log("🧠 CDK successfully cloned!");
   } catch (error) {
-    spinner.fail("An error occurred cloning github repo");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

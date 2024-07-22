@@ -23,10 +23,12 @@ const configureAWS = async () => {
     });
 
     // Restart the spinner after the command completes
-    spinner.succeed("AWS credentials successfully configured!");
+
+    // spinner.succeed("AWS successfully configured!");
+    spinner.stop();
+    console.log("🧠 AWS successfully configured!");
   } catch (error) {
-    spinner.fail("An error occurred configuring aws credentials");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

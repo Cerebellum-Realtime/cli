@@ -9,34 +9,38 @@ const execPromise = promisify(exec);
 const spinner = ora();
 
 const confirmAwsCdkInstall = async () => {
-  spinner.start("Checking if aws-cli is installed...");
+  spinner.start("Checking if AWS CDK is installed...");
   const alreadyInstalled = await execPromise("cdk --version").catch(
     () => false
   );
 
   if (alreadyInstalled) {
-    spinner.succeed("aws-cdk is installed!");
+    // spinner.succeed("aws-cdk is installed!");
+    spinner.stop();
+    console.log("🧠 AWS CDK is installed!");
     return;
   }
 
   spinner.stop();
   try {
     const response = await cli.prompt(
-      "You will need aws-cdk to be globally installed to deploy the infrastructure.\n Would you like it to be installed? (y/n)"
+      "You will need AWS CDK to be globally installed to deploy the infrastructure.\n=> Would you like it to be installed? (y/n)"
     );
 
-    if (response.toLowerCase() === "n") {
+    if (response.toLowerCase() !== "y") {
       throw new Error(
-        "Permission denied by user. Please globally install aws-cdk independently or run script again."
+        "Permission denied by user. Please globally install AWS CDK independently or run script again."
       );
     }
 
-    spinner.start("Globally installing aws-cdk!");
+    spinner.start("Globally installing AWS CDK!");
     await execPromise("npm install -g aws-cdk");
-    spinner.succeed("aws-cdk globally installed!");
+
+    // spinner.succeed("aws-cdk globally installed!");
+    spinner.stop();
+    console.log("🧠 AWS CDK globally installed!");
   } catch (error) {
-    spinner.fail("An error occurred installing aws-cdk globally");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

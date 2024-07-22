@@ -17,10 +17,11 @@ const npmInstallCDK = async (init: Boolean, directory?: String) => {
       await execPromise(`cd ${directory} && npm install`);
     }
 
-    spinner.succeed("Dependencies within the CDK successfully installed!");
+    // spinner.succeed("CDK dependencies successfully installed!");
+    spinner.stop();
+    console.log("🧠 CDK dependencies successfully installed!");
   } catch (error) {
-    spinner.fail("An error occurred installing dependencies for the cdk");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

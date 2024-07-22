@@ -17,10 +17,11 @@ const cdkSynth = async (init: Boolean, directory?: String) => {
       await execPromise(`cd ${directory} && cdk synth`);
     }
 
-    spinner.succeed("CDK successfully synthesized!");
+    // spinner.succeed("CDK successfully synthesized!");
+    spinner.stop();
+    console.log("🧠 CDK successfully synthesized!");
   } catch (error) {
-    spinner.fail("An error occurred running cdk synth");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

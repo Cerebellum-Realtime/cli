@@ -17,6 +17,7 @@ export default class Init extends Command {
     const init = true;
 
     await confirmAwsCliInstall();
+    await confirmAwsCdkInstall();
     await configureAWS();
     await cloneCDK(init);
     await npmInstallCDK(init);
@@ -27,7 +28,7 @@ export default class Init extends Command {
 
     console.log("Success! You are now ready to deploy your infrastructure!");
     console.log(
-      "When ready, enter `cd cdk && cdk deploy` and follow the prompts."
+      "When ready, run `cd cdk && cdk deploy` and follow the prompts."
     );
     console.log("Deployment can take 10-20 minutes, depending on complexity.");
   }
