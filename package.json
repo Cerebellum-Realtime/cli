@@ -1,0 +1,44 @@
+{
+  "name": "@avery.littlemore/test-cerebellum",
+  "version": "1.0.1",
+  "scripts": {
+    "build": "npx exec tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "bin": {
+    "cerebellum": "./bin/run.js"
+  },
+  "oclif": {
+    "bin": "cerebellum",
+    "commands": "./dist/commands",
+    "dirname": "cerebellum",
+    "topicSeparator": " "
+  },
+  "dependencies": {
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5",
+    "cli-ux": "^6.0.9",
+    "ora": "^8.0.1"
+  },
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
+  }
+}
