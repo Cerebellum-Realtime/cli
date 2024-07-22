@@ -14,7 +14,7 @@ const npmInstallCDK = async (init: Boolean, directory?: String) => {
     if (init === true) {
       await execPromise("npm install");
     } else {
-      await execPromise("cd cerebellumCDK && npm install");
+      await execPromise(`cd ${directory} && npm install`);
     }
 
     spinner.succeed("Dependencies within the CDK successfully installed!");

@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@oclif/core": "^4",
-    "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^5",
+    "@oclif/plugin-help": "^6.2.6",
+    "@oclif/plugin-plugins": "^5.3.8",
     "cli-ux": "^6.0.9",
     "ora": "^8.0.1"
   },

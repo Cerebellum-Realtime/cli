@@ -1,6 +1,7 @@
 import ora from "ora";
 import { exec } from "child_process";
 import { promisify } from "util";
+import { cli } from "cli-ux";
 
 // Promisify exec for async/await usage
 const execPromise = promisify(exec);
