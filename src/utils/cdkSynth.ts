@@ -7,11 +7,15 @@ const execPromise = promisify(exec);
 
 const spinner = ora();
 
-const cdkSynth = async () => {
+const cdkSynth = async (init: Boolean, directory?: String) => {
   spinner.start("Running cdk synth...");
 
   try {
-    await execPromise("cd cdk && cdk synth");
+    if (init === true) {
+      await execPromise("cdk synth");
+    } else {
+      await execPromise(`cd ${directory} && cdk synth`);
+    }
 
     // spinner.succeed("CDK successfully synthesized!");
     spinner.stop();

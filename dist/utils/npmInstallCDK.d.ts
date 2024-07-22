@@ -1,2 +1,2 @@
-declare const npmInstallCDK: () => Promise<void>;
+declare const npmInstallCDK: (init: Boolean, directory?: String) => Promise<void>;
 export default npmInstallCDK;

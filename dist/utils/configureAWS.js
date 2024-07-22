@@ -23,8 +23,7 @@ const configureAWS = async () => {
         console.log("🧠 AWS successfully configured!");
     }
     catch (error) {
-        spinner.fail("An error occurred");
-        console.error(error);
+        throw new Error(`${error}`);
     }
 };
 export default configureAWS;

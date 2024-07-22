@@ -5,11 +5,15 @@ import { promisify } from "util";
 const execPromise = promisify(exec);
 const spinner = ora();
 
-const npmInstallLambda = async () => {
+const npmInstallLambda = async (init: Boolean, directory?: String) => {
   spinner.start("Installing dependencies for lambda functions...");
 
   try {
-    await execPromise("cd cdk/lambda && npm install");
+    if (init === true) {
+      await execPromise("cd lambda && npm install");
+    } else {
+      await execPromise(`cd ${directory}/lambda && npm install`);
+    }
 
     // spinner.succeed("Lambda dependencies installed successfully!");
     spinner.stop();

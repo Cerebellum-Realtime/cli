@@ -7,13 +7,19 @@ const execPromise = promisify(exec);
 
 const spinner = ora();
 
-const cloneCDK = async () => {
+const cloneCDK = async (init: Boolean, directory?: String) => {
   spinner.start("Cloning CDK repo from Github...");
 
   try {
-    await execPromise(
-      "git clone https://github.com/Capstone2408-Team-2/cdk.git"
-    );
+    if (init === true) {
+      await execPromise(
+        "git clone https://github.com/Capstone2408-Team-2/cdk.git ."
+      );
+    } else {
+      await execPromise(
+        `git clone https://github.com/Capstone2408-Team-2/cdk.git ${directory}`
+      );
+    }
 
     // spinner.succeed("CDK successfully cloned!");
     spinner.stop();

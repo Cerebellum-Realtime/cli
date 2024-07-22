@@ -4,17 +4,21 @@ import { promisify } from "util";
 // Promisify exec for async/await usage
 const execPromise = promisify(exec);
 const spinner = ora();
-const cloneCDK = async () => {
+const cloneCDK = async (init, directory) => {
     spinner.start("Cloning CDK repo from Github...");
     try {
-        await execPromise("git clone https://github.com/Capstone2408-Team-2/cdk.git");
+        if (init === true) {
+            await execPromise("git clone https://github.com/Capstone2408-Team-2/cdk.git .");
+        }
+        else {
+            await execPromise(`git clone https://github.com/Capstone2408-Team-2/cdk.git ${directory}`);
+        }
         // spinner.succeed("CDK successfully cloned!");
         spinner.stop();
         console.log("🧠 CDK successfully cloned!");
     }
     catch (error) {
-        spinner.fail("An error occurred");
-        console.error(error);
+        throw new Error(`${error}`);
     }
 };
 export default cloneCDK;

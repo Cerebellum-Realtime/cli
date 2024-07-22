@@ -7,11 +7,15 @@ const execPromise = promisify(exec);
 
 const spinner = ora();
 
-const npmInstallCDK = async () => {
+const npmInstallCDK = async (init: Boolean, directory?: String) => {
   spinner.start("Installing dependencies in the CDK...");
 
   try {
-    await execPromise("cd cdk && npm install");
+    if (init === true) {
+      await execPromise("npm install");
+    } else {
+      await execPromise(`cd ${directory} && npm install`);
+    }
 
     // spinner.succeed("CDK dependencies successfully installed!");
     spinner.stop();

@@ -7,11 +7,15 @@ const execPromise = promisify(exec);
 
 const spinner = ora();
 
-const cdkBootstrap = async () => {
+const cdkBootstrap = async (init: Boolean, directory?: String) => {
   spinner.start("Creating bootstrap resources for CDK...");
 
   try {
-    await execPromise("cd cdk && cdk bootstrap");
+    if (init === true) {
+      await execPromise("cdk bootstrap");
+    } else {
+      await execPromise(`cd ${directory} && cdk bootstrap`);
+    }
 
     // spinner.succeed("CDK bootstrap creation success!");
     spinner.stop();
