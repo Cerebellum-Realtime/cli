@@ -1,2 +1,2 @@
-declare const npmInstallLambda: () => Promise<void>;
+declare const npmInstallLambda: (init: Boolean, directory?: String) => Promise<void>;
 export default npmInstallLambda;

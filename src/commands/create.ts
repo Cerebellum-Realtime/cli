@@ -8,22 +8,23 @@ import cdkBootstrap from "../utils/cdkBootstrap.js";
 import confirmAwsCdkInstall from "../utils/confirmAwsCdkInstall.js";
 import confirmAwsCliInstall from "../utils/confirmAwsCliInstall.js";
 
-export default class Init extends Command {
-  static description = "Initialize the CDK project in current directory";
+export default class Create extends Command {
+  static description = "Create a new directory and initialize the CDK project";
 
   async run(): Promise<void> {
     console.log("Welcome to the Cerebellum CLI!");
 
-    const init = true;
+    const init = false;
+    const directoryName = "cerebellumCDK";
 
     await confirmAwsCliInstall();
     await configureAWS();
-    await cloneCDK(init);
-    await npmInstallCDK(init);
-    await npmInstallLambda(init);
+    await cloneCDK(init, directoryName);
+    await npmInstallCDK(init, directoryName);
+    await npmInstallLambda(init, directoryName);
     await confirmAwsCdkInstall();
-    await cdkSynth(init);
-    await cdkBootstrap(init);
+    await cdkSynth(init, directoryName);
+    await cdkBootstrap(init, directoryName);
 
     console.log("Success! You are now ready to deploy your infrastructure!");
     console.log(

@@ -8,9 +8,6 @@ const configureAWS = async () => {
             const child = spawn("aws", ["configure"], {
                 stdio: "inherit", // This allows for interactive input/output
             });
-            child.stdout?.on("data", () => {
-                console.log("Here");
-            });
             child.on("close", (code) => {
                 if (code === 0) {
                     resolve(null);
@@ -21,10 +18,10 @@ const configureAWS = async () => {
             });
         });
         // Restart the spinner after the command completes
-        spinner.succeed("AWS configure success!");
+        spinner.succeed("AWS credentials successfully configured!");
     }
     catch (error) {
-        spinner.fail("An error occurred");
+        spinner.fail("An error occurred configuring aws credentials");
         console.error(error);
     }
 };

@@ -1,8 +1,8 @@
 {
-  "name": "@avery.littlemore/test-cerebellum",
-  "version": "1.0.1",
+  "name": "@nelson030/test-cerebellum",
+  "version": "1.0.5",
   "scripts": {
-    "build": "npx exec tsc"
+    "build": "npm exec tsc"
   },
   "author": "",
   "license": "ISC",
