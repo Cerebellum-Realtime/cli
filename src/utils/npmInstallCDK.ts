@@ -17,8 +17,7 @@ const npmInstallCDK = async () => {
     spinner.stop();
     console.log("🧠 CDK dependencies successfully installed!");
   } catch (error) {
-    spinner.fail("An error occurred");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

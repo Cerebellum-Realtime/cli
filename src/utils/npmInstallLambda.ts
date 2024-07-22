@@ -15,8 +15,7 @@ const npmInstallLambda = async () => {
     spinner.stop();
     console.log("🧠 Lambda dependencies installed successfully!");
   } catch (error) {
-    spinner.fail("An error occurred");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

@@ -19,8 +19,7 @@ const cloneCDK = async () => {
     spinner.stop();
     console.log("🧠 CDK successfully cloned!");
   } catch (error) {
-    spinner.fail("An error occurred");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

@@ -40,7 +40,6 @@ const confirmAwsCdkInstall = async () => {
     spinner.stop();
     console.log("🧠 AWS CDK globally installed!");
   } catch (error) {
-    spinner.fail("An error occurred");
     throw new Error(`${error}`);
   }
 };

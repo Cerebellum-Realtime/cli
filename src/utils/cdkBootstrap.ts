@@ -17,8 +17,7 @@ const cdkBootstrap = async () => {
     spinner.stop();
     console.log("🧠 CDK bootstrap creation success!");
   } catch (error) {
-    spinner.fail("An error occurred creating cdk bootstrap");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

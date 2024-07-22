@@ -17,8 +17,7 @@ const cdkSynth = async () => {
     spinner.stop();
     console.log("🧠 CDK successfully synthesized!");
   } catch (error) {
-    spinner.fail("An error occurred");
-    console.error(error);
+    throw new Error(`${error}`);
   }
 };
 

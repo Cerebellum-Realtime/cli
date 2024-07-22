@@ -17,7 +17,6 @@ const confirmAwsCliInstall = async () => {
     spinner.stop();
     console.log("🧠 AWS CLI is installed!");
   } catch (error) {
-    spinner.fail("An error occurred");
     throw new Error(
       "AWS CLI is not globally installed. Please follow README guide to install AWS CLI and try again."
     );
