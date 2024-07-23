@@ -37,7 +37,7 @@ const createEnvFile = async (init, certificateARN, imageURI, numberOfConcurrentT
             await execPromise(`cd ${directory} && echo "SCALING_MAX=${scalingMax}" >> .env`);
         }
         spinner.stop();
-        console.log(`🧠 .env file created successfully with the provided environment variables.`);
+        console.log(`🧠 .env file successfully created with the provided environment variables!`);
     }
     catch (error) {
         throw new Error(`${error}`);

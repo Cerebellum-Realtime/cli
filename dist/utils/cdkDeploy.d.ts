@@ -1,2 +1,2 @@
-declare const cdkDeploy: () => Promise<void>;
+declare const cdkDeploy: (directory: string) => Promise<unknown>;
 export default cdkDeploy;

@@ -17,7 +17,6 @@ const cdkBootstrap = async (init: Boolean, directory?: String) => {
       await execPromise(`cd ${directory} && cdk bootstrap`);
     }
 
-    // spinner.succeed("CDK bootstrap creation success!");
     spinner.stop();
     console.log("🧠 CDK bootstrap creation success!");
   } catch (error) {

@@ -15,7 +15,6 @@ const npmInstallLambda = async (init: Boolean, directory?: String) => {
       await execPromise(`cd ${directory}/lambda && npm install`);
     }
 
-    // spinner.succeed("Lambda dependencies installed successfully!");
     spinner.stop();
     console.log("🧠 Lambda dependencies installed successfully!");
   } catch (error) {

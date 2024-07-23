@@ -12,6 +12,7 @@ import getImageURI from "../utils/getImage.js";
 import getNumberOfConcurrentTasks from "../utils/getNumberOfConcurrentTasks.js";
 import getScalingLimitations from "../utils/getScalingLimitations.js";
 import createEnvFile from "../utils/createEnvFile.js";
+import cdkDeploy from "../utils/cdkDeploy.js";
 export default class Create extends Command {
     static description = "Create a new directory and initialize the CDK project";
     async run() {
@@ -20,8 +21,8 @@ export default class Create extends Command {
         const directoryName = "cerebellumCDK";
         await confirmAwsCliInstall();
         await configureAWS();
-        const certificateARN = await getCertificate();
         const imageURI = await getImageURI();
+        const certificateARN = await getCertificate();
         const numberOfConcurrentTasks = await getNumberOfConcurrentTasks(); // Ave
         const { scalingMin, scalingMax } = await getScalingLimitations(); // Austin
         // const cronJobFrequency = await getCronJobFrequency(); // Austin
@@ -32,6 +33,7 @@ export default class Create extends Command {
         await confirmAwsCdkInstall();
         await cdkSynth(init, directoryName);
         await cdkBootstrap(init, directoryName);
+        await cdkDeploy(directoryName);
         console.log("Success! You are now ready to deploy your infrastructure!");
         console.log(`When ready, enter \`cd ${directoryName} && cdk deploy\` and follow the prompts.`);
         console.log("Deployment can take 10-20 minutes, depending on complexity.");

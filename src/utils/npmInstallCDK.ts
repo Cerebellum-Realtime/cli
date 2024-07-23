@@ -17,7 +17,6 @@ const npmInstallCDK = async (init: Boolean, directory?: String) => {
       await execPromise(`cd ${directory} && npm install`);
     }
 
-    // spinner.succeed("CDK dependencies successfully installed!");
     spinner.stop();
     console.log("🧠 CDK dependencies successfully installed!");
   } catch (error) {

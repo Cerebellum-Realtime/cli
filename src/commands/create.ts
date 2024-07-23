@@ -9,9 +9,10 @@ import confirmAwsCdkInstall from "../utils/confirmAwsCdkInstall.js";
 import confirmAwsCliInstall from "../utils/confirmAwsCliInstall.js";
 import getCertificate from "../utils/getCertificate.js";
 import getImageURI from "../utils/getImage.js";
-import getNumberOfConcurrentTasks from "../utils/getNumberOfConcurrentTasks.js";
 import getScalingLimitations from "../utils/getScalingLimitations.js";
 import createEnvFile from "../utils/createEnvFile.js";
+import cdkDeploy from "../utils/cdkDeploy.js";
+import getSecret from "../utils/getSecret.js";
 
 export default class Create extends Command {
   static description = "Create a new directory and initialize the CDK project";
@@ -24,17 +25,15 @@ export default class Create extends Command {
 
     await confirmAwsCliInstall();
     await configureAWS();
-    const certificateARN = await getCertificate();
     const imageURI = await getImageURI();
-    const numberOfConcurrentTasks = await getNumberOfConcurrentTasks(); // Ave
-    const { scalingMin, scalingMax } = await getScalingLimitations(); // Austin
-    // const cronJobFrequency = await getCronJobFrequency(); // Austin
+    const certificateARN = await getCertificate();
+    const { scalingMin, scalingMax } = await getScalingLimitations();
+    // const cronJobFrequency = await getCronJobFrequency();
     await cloneCDK(init, directoryName);
     await createEnvFile(
       init,
       certificateARN,
       imageURI,
-      numberOfConcurrentTasks,
       scalingMin,
       scalingMax,
       directoryName
@@ -44,6 +43,9 @@ export default class Create extends Command {
     await confirmAwsCdkInstall();
     await cdkSynth(init, directoryName);
     await cdkBootstrap(init, directoryName);
+    const secretKey = await cdkDeploy(directoryName);
+
+    await getSecret(secretKey);
 
     console.log("Success! You are now ready to deploy your infrastructure!");
     console.log(

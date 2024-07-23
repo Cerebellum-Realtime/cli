@@ -20,8 +20,8 @@ export default class Init extends Command {
         await confirmAwsCliInstall();
         await confirmAwsCdkInstall();
         await configureAWS();
-        const certificateARN = await getCertificate();
         const imageURI = await getImageURI();
+        const certificateARN = await getCertificate();
         const numberOfConcurrentTasks = await getNumberOfConcurrentTasks(); // Ave
         const { scalingMin, scalingMax } = await getScalingLimitations(); // Austin
         // const cronJobFrequency = await getCronJobFrequency(); // Austin
