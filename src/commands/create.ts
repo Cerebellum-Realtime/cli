@@ -12,7 +12,6 @@ import getImageURI from "../utils/getImage.js";
 import getScalingLimitations from "../utils/getScalingLimitations.js";
 import createEnvFile from "../utils/createEnvFile.js";
 import cdkDeploy from "../utils/cdkDeploy.js";
-import getSecret from "../utils/getSecret.js";
 
 export default class Create extends Command {
   static description = "Create a new directory and initialize the CDK project";
@@ -43,14 +42,10 @@ export default class Create extends Command {
     await confirmAwsCdkInstall();
     await cdkSynth(init, directoryName);
     await cdkBootstrap(init, directoryName);
-    const secretKey = await cdkDeploy(directoryName);
+    await cdkDeploy(directoryName);
 
-    await getSecret(secretKey);
-
-    console.log("Success! You are now ready to deploy your infrastructure!");
     console.log(
-      `When ready, enter \`cd ${directoryName} && cdk deploy\` and follow the prompts.`
+      "🎉 Success! Your infrastructure has been successfully deployed! 🎉"
     );
-    console.log("Deployment can take 10-20 minutes, depending on complexity.");
   }
 }

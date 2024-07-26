@@ -4,52 +4,42 @@ import readline from "readline";
 
 const spinner = ora();
 
-const cdkDeploy = async (directory?: string): Promise<string> => {
+const cdkDeploy = async (directory?: string): Promise<void> => {
   spinner.start("Deploying infrastructure to AWS...");
 
   try {
-    // Build the command and arguments
     const command = "cdk";
     const args = ["deploy", "--require-approval", "never"];
     const options = directory ? { cwd: directory } : {};
-
-    // Variables to capture stdout data
     let stdoutData = "";
-
-    // Spawn a child process to run the command
     const child = spawn(command, args, options);
-
-    // Create a readline interface for user input
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
 
-    // Handle stdout and stderr streams
     child.stdout.on("data", (data) => {
-      stdoutData += data.toString(); // Capture stdout data
-      process.stdout.write(data); // Pipe the output to stdout
+      stdoutData += data.toString();
+      process.stdout.write(data);
     });
 
     child.stderr.on("data", (data) => {
-      process.stderr.write(data); // Pipe errors to stderr
+      process.stderr.write(data);
     });
 
-    // Handle user input for interactive prompts
     rl.on("line", (input) => {
       child.stdin.write(`${input}\n`);
     });
 
-    // Handle process events
     const exitCode = await new Promise<number>((resolve, reject) => {
       child.on("error", (error) => {
         spinner.fail(`Deployment failed: ${error.message}`);
-        rl.close(); // Close the readline interface on error
+        rl.close();
         reject(error);
       });
 
       child.on("close", (code: number) => {
-        rl.close(); // Ensure readline interface is closed on completion
+        rl.close();
         resolve(code);
       });
     });
@@ -57,19 +47,7 @@ const cdkDeploy = async (directory?: string): Promise<string> => {
     spinner.stop();
 
     if (exitCode === 0) {
-      // Extract the secret key from stdoutData
-      const secretKeyPattern =
-        /WebSocketServerStack\.ALBApiKeySecretArnOutput[^\s]+ = ([^\s]+)/;
-      const match = secretKeyPattern.exec(stdoutData);
-
-      if (match && match[1]) {
-        const secretKey = match[1];
-        console.log("🧠 Infrastructure successfully deployed!");
-        console.log(`🔑 Extracted Secret Key: ${secretKey}`);
-        return secretKey;
-      } else {
-        throw new Error("Secret key not found in the deployment output.");
-      }
+      console.log("🧠 Infrastructure successfully deployed!");
     } else {
       throw new Error(`Deployment process exited with code ${exitCode}`);
     }

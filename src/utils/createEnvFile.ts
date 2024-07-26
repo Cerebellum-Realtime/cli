@@ -1,4 +1,3 @@
-import { writeFileSync, appendFileSync } from "fs";
 import ora from "ora";
 import { exec } from "child_process";
 import { promisify } from "util";
@@ -7,13 +6,6 @@ import { promisify } from "util";
 const execPromise = promisify(exec);
 
 const spinner = ora();
-
-const printToEnv = async (envVariables: string[], directory?: string) => {
-  await execPromise("touch .env");
-  envVariables.forEach(async (envVariable) => {
-    await execPromise(`echo "${envVariable}" >> .env`);
-  });
-};
 
 const createEnvFile = async (
   init: boolean,
