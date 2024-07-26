@@ -10,7 +10,7 @@ const spinner = ora();
 const createEnvFile = async (
   init: boolean,
   certificateARN: string,
-  imageURI: string,
+  image: string,
   scalingMin: number,
   scalingMax: number,
   directory?: string
@@ -21,7 +21,7 @@ const createEnvFile = async (
     if (init === true) {
       await execPromise("touch .env");
       await execPromise(`echo "CERTIFICATE_ARN=${certificateARN}" > .env`);
-      await execPromise(`echo "IMAGE_URI=${imageURI}" >> .env`);
+      await execPromise(`echo "IMAGE_URI=${image}" >> .env`);
       await execPromise(`echo "SCALING_MIN=${scalingMin}" >> .env`);
       await execPromise(`echo "SCALING_MAX=${scalingMax}" >> .env`);
     } else {
@@ -29,9 +29,7 @@ const createEnvFile = async (
       await execPromise(
         `cd ${directory} && echo "CERTIFICATE_ARN=${certificateARN}" > .env`
       );
-      await execPromise(
-        `cd ${directory} && echo "IMAGE_URI=${imageURI}" >> .env`
-      );
+      await execPromise(`cd ${directory} && echo "IMAGE_URI=${image}" >> .env`);
       await execPromise(
         `cd ${directory} && echo "SCALING_MIN=${scalingMin}" >> .env`
       );

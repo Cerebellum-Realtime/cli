@@ -8,13 +8,14 @@ import cdkBootstrap from "../utils/cdkBootstrap.js";
 import confirmAwsCdkInstall from "../utils/confirmAwsCdkInstall.js";
 import confirmAwsCliInstall from "../utils/confirmAwsCliInstall.js";
 import getCertificate from "../utils/getCertificate.js";
-import getImageURI from "../utils/getImage.js";
+import getImage from "../utils/getImage.js";
 import createEnvFile from "../utils/createEnvFile.js";
 import getScalingLimitations from "../utils/getScalingLimitations.js";
 import cdkDeploy from "../utils/cdkDeploy.js";
 
 export default class Init extends Command {
-  static description = "Initialize the CDK project in current directory";
+  static description =
+    "Initialize the CDK project in current directory and deploy infrastructure to AWS.";
 
   async run(): Promise<void> {
     console.log("Welcome to the Cerebellum CLI!");
@@ -24,12 +25,12 @@ export default class Init extends Command {
     await confirmAwsCliInstall();
     await confirmAwsCdkInstall();
     await configureAWS();
-    const imageURI = await getImageURI();
+    const image = await getImage();
     const certificateARN = await getCertificate();
     const { scalingMin, scalingMax } = await getScalingLimitations();
     // const cronJobFrequency = await getCronJobFrequency();
     await cloneCDK(init);
-    await createEnvFile(init, certificateARN, imageURI, scalingMin, scalingMax);
+    await createEnvFile(init, certificateARN, image, scalingMin, scalingMax);
     await npmInstallCDK(init);
     await npmInstallLambda(init);
     await confirmAwsCdkInstall();
