@@ -13,11 +13,11 @@ const cloneCDK = async (init: Boolean, directory?: String) => {
   try {
     if (init === true) {
       await execPromise(
-        "git clone https://github.com/Capstone2408-Team-2/cdk.git ."
+        "git clone https://github.com/Cerebellum-Realtime/cdk.git ."
       );
     } else {
       await execPromise(
-        `git clone https://github.com/Capstone2408-Team-2/cdk.git ${directory}`
+        `git clone https://github.com/Cerebellum-Realtime/cdk.git ${directory}`
       );
     }
 
