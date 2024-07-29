@@ -35,7 +35,7 @@ const getScalingLimitations = async () => {
     }
 
     console.log(
-      `🧠 Scaling limitations set to minimum of ${scalingMin} and maximum of ${scalingMax}`
+      `🧠 Scaling limitations set to minimum of ${scalingMin} and maximum of ${scalingMax}!`
     );
     return { scalingMin, scalingMax };
   } catch (error) {

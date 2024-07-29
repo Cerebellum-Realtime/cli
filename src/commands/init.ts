@@ -8,13 +8,14 @@ import cdkBootstrap from "../utils/cdkBootstrap.js";
 import confirmAwsCdkInstall from "../utils/confirmAwsCdkInstall.js";
 import confirmAwsCliInstall from "../utils/confirmAwsCliInstall.js";
 import getCertificate from "../utils/getCertificate.js";
-import getImageURI from "../utils/getImage.js";
-import getNumberOfConcurrentTasks from "../utils/getNumberOfConcurrentTasks.js";
+import getImage from "../utils/getImage.js";
 import createEnvFile from "../utils/createEnvFile.js";
 import getScalingLimitations from "../utils/getScalingLimitations.js";
+import cdkDeploy from "../utils/cdkDeploy.js";
 
 export default class Init extends Command {
-  static description = "Initialize the CDK project in current directory";
+  static description =
+    "Initialize the CDK project in current directory and deploy infrastructure to AWS.";
 
   async run(): Promise<void> {
     console.log("Welcome to the Cerebellum CLI!");
@@ -24,28 +25,21 @@ export default class Init extends Command {
     await confirmAwsCliInstall();
     await confirmAwsCdkInstall();
     await configureAWS();
+    const image = await getImage();
     const certificateARN = await getCertificate();
-    const imageURI = await getImageURI();
-    const numberOfConcurrentTasks = await getNumberOfConcurrentTasks(); // Ave
-    const { scalingMin, scalingMax } = await getScalingLimitations(); // Austin
-    // const cronJobFrequency = await getCronJobFrequency(); // Austin
+    const { scalingMin, scalingMax } = await getScalingLimitations();
+    // const cronJobFrequency = await getCronJobFrequency();
     await cloneCDK(init);
-    await createEnvFile(
-      init,
-      certificateARN,
-      imageURI,
-      numberOfConcurrentTasks,
-      scalingMin,
-      scalingMax
-    );
+    await createEnvFile(init, certificateARN, image, scalingMin, scalingMax);
     await npmInstallCDK(init);
     await npmInstallLambda(init);
     await confirmAwsCdkInstall();
     await cdkSynth(init);
     await cdkBootstrap(init);
+    await cdkDeploy();
 
-    console.log("Success! You are now ready to deploy your infrastructure!");
-    console.log("When ready, run `cdk deploy` and follow the prompts.");
-    console.log("Deployment can take 10-20 minutes, depending on complexity.");
+    console.log(
+      "🎉 Success! Your infrastructure has been successfully deployed! 🎉"
+    );
   }
 }

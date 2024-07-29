@@ -8,7 +8,6 @@ const confirmAwsCliInstall = async () => {
     try {
         spinner.start("Checking if AWS CLI is installed...");
         await execPromise("aws --version");
-        // spinner.succeed("aws-cli is installed!");
         spinner.stop();
         console.log("🧠 AWS CLI is installed!");
     }

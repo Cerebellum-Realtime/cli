@@ -13,7 +13,6 @@ const cloneCDK = async (init, directory) => {
         else {
             await execPromise(`git clone https://github.com/Capstone2408-Team-2/cdk.git ${directory}`);
         }
-        // spinner.succeed("CDK successfully cloned!");
         spinner.stop();
         console.log("🧠 CDK successfully cloned!");
     }

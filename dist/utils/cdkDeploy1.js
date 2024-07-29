@@ -4,20 +4,20 @@ import { promisify } from "util";
 // Promisify exec for async/await usage
 const execPromise = promisify(exec);
 const spinner = ora();
-const cdkSynth = async (init, directory) => {
-    spinner.start("Running cdk synth...");
+const cdkDeploy1 = async (init, directory) => {
+    spinner.start("Deploying infrastructure to AWS...");
     try {
         if (init === true) {
-            await execPromise("cdk synth");
+            await execPromise("cdk deploy");
         }
         else {
-            await execPromise(`cd ${directory} && cdk synth`);
+            await execPromise(`cd ${directory} && cdk deploy`);
         }
         spinner.stop();
-        console.log("🧠 CDK successfully synthesized!");
+        console.log("🧠 Infrastructure successfully deployed!");
     }
     catch (error) {
         throw new Error(`${error}`);
     }
 };
-export default cdkSynth;
+export default cdkDeploy1;

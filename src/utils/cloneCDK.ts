@@ -21,7 +21,6 @@ const cloneCDK = async (init: Boolean, directory?: String) => {
       );
     }
 
-    // spinner.succeed("CDK successfully cloned!");
     spinner.stop();
     console.log("🧠 CDK successfully cloned!");
   } catch (error) {

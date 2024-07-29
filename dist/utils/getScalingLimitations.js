@@ -25,7 +25,7 @@ const getScalingLimitations = async () => {
                 console.log(`Invalid input. Please enter a number greater than or equal to ${scalingMin}.`);
             }
         }
-        console.log(`🧠 Scaling limitations set to minimum of ${scalingMin} and maximum of ${scalingMax}`);
+        console.log(`🧠 Scaling limitations set to minimum of ${scalingMin} and maximum of ${scalingMax}!`);
         return { scalingMin, scalingMax };
     }
     catch (error) {

@@ -1,15 +1,47 @@
 import ora from "ora";
-import { exec } from "child_process";
-import { promisify } from "util";
-const execPromise = promisify(exec);
+import { spawn } from "child_process";
+import readline from "readline";
 const spinner = ora();
-const cdkDeploy = async () => {
-    spinner.start("Deploying CDK... (this may take 10-20 minutes, depending on the complexity)");
+const cdkDeploy = async (directory) => {
+    spinner.start("Deploying infrastructure to AWS...");
     try {
-        await execPromise("cd cdk && cdk deploy --require-approval never");
-        // spinner.succeed("CDK successfuly deployed!");
+        const command = "cdk";
+        const args = ["deploy", "--require-approval", "never"];
+        const options = directory ? { cwd: directory } : {};
+        let stdoutData = "";
+        const child = spawn(command, args, options);
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
+        child.stdout.on("data", (data) => {
+            stdoutData += data.toString();
+            process.stdout.write(data);
+        });
+        child.stderr.on("data", (data) => {
+            process.stderr.write(data);
+        });
+        rl.on("line", (input) => {
+            child.stdin.write(`${input}\n`);
+        });
+        const exitCode = await new Promise((resolve, reject) => {
+            child.on("error", (error) => {
+                spinner.fail(`Deployment failed: ${error.message}`);
+                rl.close();
+                reject(error);
+            });
+            child.on("close", (code) => {
+                rl.close();
+                resolve(code);
+            });
+        });
         spinner.stop();
-        console.log("🧠 CDK successfuly deployed!");
+        if (exitCode === 0) {
+            console.log("🧠 Infrastructure successfully deployed!");
+        }
+        else {
+            throw new Error(`Deployment process exited with code ${exitCode}`);
+        }
     }
     catch (error) {
         throw new Error(`${error}`);

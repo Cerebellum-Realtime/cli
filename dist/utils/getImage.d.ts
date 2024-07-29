@@ -1,2 +1,2 @@
-declare const getImageURI: () => Promise<string>;
-export default getImageURI;
+declare const getImage: () => Promise<string>;
+export default getImage;

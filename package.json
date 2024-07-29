@@ -1,6 +1,6 @@
 {
-  "name": "@nelson030/test-cerebellum",
-  "version": "1.0.6",
+  "name": "@cerebellum/cli",
+  "version": "1.0.2",
   "scripts": {
     "build": "npm exec tsc"
   },
@@ -23,7 +23,8 @@
     "@oclif/plugin-plugins": "^5",
     "cli-ux": "^6.0.9",
     "fs": "^0.0.1-security",
-    "ora": "^8.0.1"
+    "ora": "^8.0.1",
+    "quill": "^2.0.2"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",

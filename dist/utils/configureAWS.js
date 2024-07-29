@@ -6,7 +6,7 @@ const configureAWS = async () => {
         console.log("Loading AWS Configure...");
         await new Promise((resolve, reject) => {
             const child = spawn("aws", ["configure"], {
-                stdio: "inherit", // This allows for interactive input/output
+                stdio: "inherit",
             });
             child.on("close", (code) => {
                 if (code === 0) {
@@ -17,8 +17,6 @@ const configureAWS = async () => {
                 }
             });
         });
-        // Restart the spinner after the command completes
-        // spinner.succeed("AWS successfully configured!");
         spinner.stop();
         console.log("🧠 AWS successfully configured!");
     }

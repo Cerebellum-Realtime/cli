@@ -8,13 +8,14 @@ import cdkBootstrap from "../utils/cdkBootstrap.js";
 import confirmAwsCdkInstall from "../utils/confirmAwsCdkInstall.js";
 import confirmAwsCliInstall from "../utils/confirmAwsCliInstall.js";
 import getCertificate from "../utils/getCertificate.js";
-import getImageURI from "../utils/getImage.js";
-import getNumberOfConcurrentTasks from "../utils/getNumberOfConcurrentTasks.js";
+import getImage from "../utils/getImage.js";
 import getScalingLimitations from "../utils/getScalingLimitations.js";
 import createEnvFile from "../utils/createEnvFile.js";
+import cdkDeploy from "../utils/cdkDeploy.js";
 
 export default class Create extends Command {
-  static description = "Create a new directory and initialize the CDK project";
+  static description =
+    "Create a new directory, initialize the CDK project, and deploy infrastructure to AWS.";
 
   async run(): Promise<void> {
     console.log("Welcome to the Cerebellum CLI!");
@@ -24,17 +25,15 @@ export default class Create extends Command {
 
     await confirmAwsCliInstall();
     await configureAWS();
+    const image = await getImage();
     const certificateARN = await getCertificate();
-    const imageURI = await getImageURI();
-    const numberOfConcurrentTasks = await getNumberOfConcurrentTasks(); // Ave
-    const { scalingMin, scalingMax } = await getScalingLimitations(); // Austin
-    // const cronJobFrequency = await getCronJobFrequency(); // Austin
+    const { scalingMin, scalingMax } = await getScalingLimitations();
+    // const cronJobFrequency = await getCronJobFrequency();
     await cloneCDK(init, directoryName);
     await createEnvFile(
       init,
       certificateARN,
-      imageURI,
-      numberOfConcurrentTasks,
+      image,
       scalingMin,
       scalingMax,
       directoryName
@@ -44,11 +43,10 @@ export default class Create extends Command {
     await confirmAwsCdkInstall();
     await cdkSynth(init, directoryName);
     await cdkBootstrap(init, directoryName);
+    await cdkDeploy(directoryName);
 
-    console.log("Success! You are now ready to deploy your infrastructure!");
     console.log(
-      `When ready, enter \`cd ${directoryName} && cdk deploy\` and follow the prompts.`
+      "🎉 Success! Your infrastructure has been successfully deployed! 🎉"
     );
-    console.log("Deployment can take 10-20 minutes, depending on complexity.");
   }
 }
